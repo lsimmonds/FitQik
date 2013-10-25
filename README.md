@@ -2,3 +2,5 @@ FitQik
 ======
 
 FitQik
+
+Our app
