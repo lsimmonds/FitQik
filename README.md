@@ -3,4 +3,4 @@ FitQik
 
 FitQik
 
-Our app
+Our app. Comming Soon.
