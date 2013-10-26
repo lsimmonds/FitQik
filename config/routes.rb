@@ -1,9 +1,27 @@
 FitQik::Application.routes.draw do
+  resources :students
+
+  resources :teachers
+
+  resources :admins
+
+  devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
+  authenticated :user  do
+    root :to => 'home#index', as: :authenticated_root
+    #get '/users/:id', to: 'users#show', as: :authenticated_root
+  end
+
+  #unauthenticated do
+    #root :to => "home#index", as: :unauthenticated_root
+    #root :to => "home#index"
+    root :to => "static#home"
+  #end
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
