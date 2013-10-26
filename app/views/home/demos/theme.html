@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel='stylesheet' href='cupertino/theme.css' />
+<link href='../fullcalendar/fullcalendar.css' rel='stylesheet' />
+<link href='../fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+<script src='../jquery/jquery-1.10.2.min.js'></script>
+<script src='../jquery/jquery-ui-1.10.3.custom.min.js'></script>
+<script src='../fullcalendar/fullcalendar.min.js'></script>
+<script>
+
+
+	$(document).ready(function() {
+	
+		var date = new Date();
+		var d = date.getDate();
+		var m = date.getMonth();
+		var y = date.getFullYear();
+
+		$('#calendar').fullCalendar({
+
+
+dayClick: function (date, allDay, jsEvent, view) {
+//alert(date.getDate());
+//	alert("hi");
+	//	alert("Coordinates: " + jsEvent.pageX + ", " + jsEvent.pageY);
+/*
+$('#' + 'Calendar').fullCalendar('renderEvent',
+	{
+		title: 'hi there',
+		start: new Date(y, m, d, 12, 30),
+		end: new Date(y, m, d, 13, 00)
+	});
+*/
+
+var myCalendar = $('#calendar');
+//alert(myCalendar);
+//myCalendar.fullCalendar();
+//alert(myCalendar.fullCalendar);
+//*
+var myEvent = {
+title: "Training",
+allDay: true,
+start: new Date(2013, date.getMonth(), date.getDate(), 16, 00),
+end: new Date(2013, date.getMonth(), date.getDate(), 16, 30)
+};
+//alert(myEvent);
+myCalendar.fullCalendar('renderEvent', myEvent);
+/**/
+},
+
+			theme: true,
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+			editable: true,
+			events: [
+				{
+					title: 'Training',
+					start: new Date(y, m, 1, 16, 0),
+					end: new Date(y, m, 1, 17, 0),
+					allDay: false
+				}
+			]
+		});
+		
+	});
+
+</script>
+<style>
+
+	body {
+		margin-top: 40px;
+		text-align: center;
+		font-size: 13px;
+		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+		}
+
+	#calendar {
+		width: 900px;
+		margin: 0 auto;
+		}
+
+</style>
+</head>
+<body>
+<div id='calendar'></div>
+</body>
+</html>
