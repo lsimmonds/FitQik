@@ -2,6 +2,23 @@ class AppointmentController < ApplicationController
   before_action :set_appointment, only: [:show, :add]
 
   def add
+    if params[:id]
+puts "Add Got id params: "+params.inspect
+      update params
+puts "called update"
+      return
+    end
+    unless params[:student_id] && params[:teacher_id] && params[:when] && params[:subject]
+      flash[:notice] = "Must pass all parameters to schedule apointment"
+    else
+      @appointment = Appointment.create(:subject_id => params[:subject], :when => params[:when])
+      @appointment.teachers.push(Teacher.find(params[:teacher_id]))
+      @appointment.students.push(Student.find(params[:student_id]))
+    end
+  end
+
+  def update
+puts "in update params: "+params.inspect
     unless params[:student_id] && params[:teacher_id] && params[:when] && params[:subject]
       flash[:notice] = "Must pass all parameters to schedule apointment"
     else
