@@ -1,4 +1,5 @@
 FitQik::Application.routes.draw do
+  post "appointment/add"
   resources :students
 
   resources :teachers

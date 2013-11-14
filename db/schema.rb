@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131113054410) do
+ActiveRecord::Schema.define(version: 20131114051557) do
 
   create_table "admins", force: true do |t|
     t.integer  "user_id"
@@ -21,7 +21,19 @@ ActiveRecord::Schema.define(version: 20131113054410) do
     t.datetime "updated_at"
   end
 
-  create_table "appointment_student_tables", id: false, force: true do |t|
+  create_table "appointments", force: true do |t|
+    t.string   "name"
+    t.datetime "when"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "creator_id"
+    t.integer  "updater_id"
+    t.integer  "subject_id"
+  end
+
+  add_index "appointments", ["subject_id"], name: "index_appointments_on_subject_id"
+
+  create_table "appointments_students", id: false, force: true do |t|
     t.integer  "appointment_id"
     t.integer  "student_id"
     t.datetime "created_at"
@@ -30,18 +42,9 @@ ActiveRecord::Schema.define(version: 20131113054410) do
     t.integer  "updater_id"
   end
 
-  create_table "appointment_teacher_tables", id: false, force: true do |t|
+  create_table "appointments_teachers", id: false, force: true do |t|
     t.integer  "appointment_id"
     t.integer  "teacher_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "creator_id"
-    t.integer  "updater_id"
-  end
-
-  create_table "appointments", force: true do |t|
-    t.string   "name"
-    t.datetime "when"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "creator_id"
