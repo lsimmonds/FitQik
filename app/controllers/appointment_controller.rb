@@ -1,11 +1,9 @@
 class AppointmentController < ApplicationController
-  before_action :set_appointment, only: [:show, :add]
+  before_action :set_appointment, only: [:show, :add, :update]
 
   def add
-    if params[:id]
-puts "Add Got id params: "+params.inspect
+    if params[:id] && !params[:id].empty? && params[:id] != "0"
       update params
-puts "called update"
       return
     end
     unless params[:student_id] && params[:teacher_id] && params[:when] && params[:subject]
@@ -18,17 +16,24 @@ puts "called update"
   end
 
   def update
-puts "in update params: "+params.inspect
-    unless params[:student_id] && params[:teacher_id] && params[:when] && params[:subject]
-      flash[:notice] = "Must pass all parameters to schedule apointment"
+    if @appointment_not_found
+      params[:id] = nil
+      add
+      return
     else
-      if @appointment_not_found
-        @appointment = appt = Appointment.create(:subject_id => params[:subject], :when => params[:when])
-      else
+      if params[:when]
         @appointment.when = params[:when]
       end
-      @appointment.teachers.push(Teacher.find(params[:teacher_id]))
-      @appointment.students.push(Student.find(params[:student_id]))
+      if params[:subject]
+        @appointment.subject = params[:subject]
+      end
+      if params[:teacher_id]
+        @appointment.teachers.push(Teacher.find(params[:teacher_id]))
+      end
+      if params[:student_id]
+        @appointment.students.push(Student.find(params[:student_id]))
+      end
+      @appointment.save
     end
   end
 
