@@ -1,15 +1,20 @@
 class StudentsController < ApplicationController
+  skip_before_filter :verify_authenticity_token, :only => [:update]
   before_action :set_student, only: [:show, :edit, :update, :destroy]
 
   # GET /students
   # GET /students.json
   def index
     @students = Student.all
+puts "students: "+@students.inspect
+    render json: @students
   end
 
   # GET /students/1
   # GET /students/1.json
   def show
+puts "student: "+@student.inspect
+    render json: @student
   end
 
   # GET /students/new
@@ -40,14 +45,15 @@ class StudentsController < ApplicationController
   # PATCH/PUT /students/1
   # PATCH/PUT /students/1.json
   def update
-    respond_to do |format|
-      if @student.update(student_params)
-        format.html { redirect_to @student, notice: 'Student was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @student.errors, status: :unprocessable_entity }
-      end
+    request.body.rewind
+    json_params = JSON.parse(request.body.read)
+    json_params.each_pair do |property,value|
+      @student.send(property+'=',value)if @student.respond_to?(property+'=')
+    end
+    if @student.save
+      render json: @student, status: :ok
+    else
+      render json: @student.errors, status: :unprocessable_entity
     end
   end
 

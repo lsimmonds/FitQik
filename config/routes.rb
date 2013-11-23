@@ -1,7 +1,12 @@
 FitQik::Application.routes.draw do
   post "appointment/add"
   post "appointment/update"
-  resources :students
+  #resources :students
+  get '/students(.:format)', to: 'students#index', as: 'students'
+  post '/students(.:format)', to: 'students#create'
+  get '/students/:id(.:format)', to: 'students#show', as: 'student'
+  post '/students/:id(.:format)', to: 'students#update'
+  delete '/students/:id(.:format)', to: 'students#destroy'
 
   resources :teachers
 
