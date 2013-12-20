@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 
+gem "rails-api", "~> 0.1.0"
+
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 
@@ -50,9 +52,14 @@ gem "database_cleaner", :group => :test
 gem "email_spec", :group => :test
 gem "cucumber-rails", :group => [:development, :test], :require => false
 gem "capybara", :group => [:development, :test]
+gem "selenium-webdriver", :group => [:development, :test]
+gem 'capybara-json', :group => [:development, :test]
+gem "json_spec", "~> 1.1.1", :group => [:development, :test]
 
 gem "figaro"
-gem 'devise', '3.0.0.rc'
+gem "warden", "~> 1.2.3"
+gem "devise", "~> 3.2.2"
+#gem 'devise', '3.0.0.rc'
 
 gem 'userstamp'
 

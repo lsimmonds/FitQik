@@ -1,32 +1,38 @@
+require 'api_constraints'
+
 FitQik::Application.routes.draw do
-  post "appointment/add"
-  post "appointment/update"
-  #resources :students
-  get '/students(.:format)', to: 'students#index', as: 'students'
-  post '/students(.:format)', to: 'students#create'
-  get '/students/:id(.:format)', to: 'students#show', as: 'student'
-  post '/students/:id(.:format)', to: 'students#update'
-  delete '/students/:id(.:format)', to: 'students#destroy'
+  namespace :api, defaults: {format: 'json'} do
+    scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
+      post "appointment/add"
+      post "appointment/update"
+      #resources :students
+      get '/students(.:format)', to: 'students#index', as: 'students'
+      post '/students(.:format)', to: 'students#create'
+      get '/students/:id(.:format)', to: 'students#show', as: 'student'
+      post '/students/:id(.:format)', to: 'students#update'
+      delete '/students/:id(.:format)', to: 'students#destroy'
 
-  resources :teachers
+      resources :teachers
 
-  resources :admins
+      resources :admins
 
-  devise_for :users
+      devise_for :users
+    end
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
-  authenticated :user  do
-    root :to => 'home#index', as: :authenticated_root
+#  authenticated :user  do
+#    root :to => 'home#index', as: :authenticated_root
     #get '/users/:id', to: 'users#show', as: :authenticated_root
-  end
+#  end
 
   #unauthenticated do
     #root :to => "home#index", as: :unauthenticated_root
     #root :to => "home#index"
-    root :to => "static#home"
+#    root :to => "static#home"
   #end
 
 

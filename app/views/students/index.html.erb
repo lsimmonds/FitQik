@@ -10,6 +10,7 @@
   </thead>
 
   <tbody>
+  <% if @students %>
     <% @students.each do |student| %>
       <tr>
         <td><%= link_to 'Show', student %></td>
@@ -17,9 +18,10 @@
         <td><%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
+  <% end %>
   </tbody>
 </table>
 
 <br>
 
-<%= link_to 'New Student', new_student_path %>
+<!-- <= link_to 'New Student', new_student_path %> -->
