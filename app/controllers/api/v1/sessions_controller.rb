@@ -2,6 +2,7 @@ module Api
   module V1
     class SessionsController < Devise::SessionsController
       include Devise::Controllers::Helpers
+      skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
       prepend_before_filter :require_no_authentication, :only => [:create ]
       acts_as_token_authentication_handler
        

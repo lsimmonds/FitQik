@@ -10,7 +10,6 @@ module Api
       # GET /students.json
       def index
         @students = Student.all
-    puts "index students: "+@students.inspect
         #respond_to do |format|
         #  format.json { render json: @students, status: :ok }
         #end
@@ -21,7 +20,6 @@ module Api
       # GET /students/1
       # GET /students/1.json
       def show
-    puts "show student: "+@student.inspect
         #render json: @student
         respond_with @student
       end
@@ -38,12 +36,9 @@ module Api
       # POST /students
       # POST /students.json
       def create
-puts "create params: "+params.inspect
         @student = Student.new(student_params)
         @current_user = User.find_by email: params[:email]
         @student.user_id = @current_user.id
-puts "@student: "+@student.inspect
-puts "@current_user: "+@current_user.inspect
     
         respond_to do |format|
           if @student.save
