@@ -1,6 +1,6 @@
 Before do
   #allow_any_instance_of(StudentsController).to receive(:index).and_return('[{"id":1,"user_id":null,"name":null,"created_at":"2013-11-14T05:05:10.084Z","updated_at":"2013-11-14T05:05:10.084Z"},{"id":2,"user_id":null,"name":"Steve","created_at":"2013-11-14T05:19:21.873Z","updated_at":"2013-11-23T07:10:06.181Z"}]')
-  allow(StudentsController).to receive(:index).and_return('[{"id":1,"user_id":null,"name":null,"created_at":"2013-11-14T05:05:10.084Z","updated_at":"2013-11-14T05:05:10.084Z"},{"id":2,"user_id":null,"name":"Steve","created_at":"2013-11-14T05:19:21.873Z","updated_at":"2013-11-23T07:10:06.181Z"}]'.to_json)
+  allow(Api::V1::StudentsController).to receive(:index).and_return('[{"id":1,"user_id":null,"name":null,"created_at":"2013-11-14T05:05:10.084Z","updated_at":"2013-11-14T05:05:10.084Z"},{"id":2,"user_id":null,"name":"Steve","created_at":"2013-11-14T05:19:21.873Z","updated_at":"2013-11-23T07:10:06.181Z"}]'.to_json)
   #@students.push = JSON.parse('{"id":1,"user_id":null,"name":null,"created_at":"2013-11-14T05:05:10.084Z","updated_at":"2013-11-14T05:05:10.084Z"}').to_hash
   #def StudentsController.index
     #render json: '[{"id":1,"user_id":null,"name":null,"created_at":"2013-11-14T05:05:10.084Z","updated_at":"2013-11-14T05:05:10.084Z"},{"id":2,"user_id":null,"name":"Steve","created_at":"2013-11-14T05:19:21.873Z","updated_at":"2013-11-23T07:10:06.181Z"}]', status: :ok
@@ -12,7 +12,7 @@ Given(/^A credentialed user$/) do
 end
 
 When(/^They visit the students url$/) do
-  get "/students/", format: 'json'
+  get "/api/students/", format: 'json'
 end
 
 Then(/^The api service will return a list of all Students$/) do

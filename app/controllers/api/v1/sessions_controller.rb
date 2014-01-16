@@ -22,6 +22,10 @@ module Api
       def destroy
         sign_out(resource_name)
       end
+
+      def sign_in_params
+        params.require(:api_user).permit(:email, :password)
+      end
        
     end
   end
