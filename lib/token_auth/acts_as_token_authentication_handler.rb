@@ -17,7 +17,6 @@ module TokenAuth
     # via parameters. However, anyone could use Rails's token
     # authentication features to get the token from a header.
     def authenticate_user_from_token!
-puts "In authenticate_user_from_token params: "+params.inspect
       # Set the authentication token params if not already present,
       # see http://stackoverflow.com/questions/11017348/rails-api-authentication-by-headers-token
       if token = params[:token].blank? && request.headers["X-User-Token"]
@@ -44,7 +43,6 @@ puts "In authenticate_user_from_token params: "+params.inspect
 
     module ClassMethods
       def acts_as_token_authentication_handler(options = {})
-puts "In acts_as_token_authentication_handler"
         include TokenAuth::ActsAsTokenAuthenticationHandler
       end
     end
