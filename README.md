@@ -339,7 +339,7 @@ token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
     "updated_at": "2014-01-16T07:58:39.609Z"
   }
 ]
-##Create A Admin
+##Create An Admin
 ### Url    
 http://localhost:3000/api/admins
 ###Method    
@@ -362,7 +362,7 @@ Content-type: application/json
   "created_at": "2014-01-16T07:58:39.609Z",
   "updated_at": "2014-01-16T07:58:39.609Z"
 }
-##Fetch A Admin
+##Fetch An Admin
 ### Url    
 http://localhost:3000/api/admins/2?token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
 ###Method    
@@ -381,7 +381,7 @@ token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
   "created_at": "2014-01-16T07:56:03.013Z",
   "updated_at": "2014-01-16T07:56:03.013Z"
 }
-##Update A Admin
+##Update An Admin
 ### Url    
 http://localhost:3000/api/admins/2
 ###Method    
@@ -404,7 +404,7 @@ Content-type: application/json
   "created_at": "2014-01-16T07:56:03.013Z",
   "updated_at": "2014-01-16T08:11:33.100Z"
 }
-##Delete A Admin
+##Delete An Admin
 ### Url    
 http://localhost:3000/api/admins/2
 ###Method    
