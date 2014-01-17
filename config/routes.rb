@@ -12,9 +12,19 @@ FitQik::Application.routes.draw do
       post '/students/:id(.:format)', to: 'students#update'
       delete '/students/:id(.:format)', to: 'students#destroy'
 
-      resources :teachers
+      #resources :teachers
+      get '/teachers(.:format)', to: 'teachers#index', as: 'teachers'
+      post '/teachers(.:format)', to: 'teachers#create'
+      get '/teachers/:id(.:format)', to: 'teachers#show', as: 'teacher'
+      post '/teachers/:id(.:format)', to: 'teachers#update'
+      delete '/teachers/:id(.:format)', to: 'teachers#destroy'
 
-      resources :admins
+      #resources :admins
+      get '/admins(.:format)', to: 'admins#index', as: 'admins'
+      post '/admins(.:format)', to: 'admins#create'
+      get '/admins/:id(.:format)', to: 'admins#show', as: 'admin'
+      post '/admins/:id(.:format)', to: 'admins#update'
+      delete '/admins/:id(.:format)', to: 'admins#destroy'
 
       devise_for :users
     end

@@ -172,11 +172,8 @@ DELETE
 Content-type: application/json
 ### JSON Input
 {
-     "student": {
-        "name": "A New Name"
-    },
    "token": "rAoj17gAdDJEudZ8D7yF",
-    "email": "test1@leonsimmonds.com"
+   "email": "test1@leonsimmonds.com"
 }
 ### JSON Return String
 No Return String
@@ -296,12 +293,128 @@ DELETE
 Content-type: application/json
 ### JSON Input
 {
-     "teacher": {
+   "token": "rAoj17gAdDJEudZ8D7yF",
+   "email": "test1@leonsimmonds.com"
+}
+### JSON Return String
+
+#Admins
+##Fetch All Admins (that you are allowed to see)
+### Url
+http://localhost:3000/api/admins?token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
+###Method
+GET
+###Header
+Content-type: application/json
+### GET query string
+token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
+### JSON Return String
+[
+  {
+    "id": 1,
+    "user_id": 2,
+    "name": "A test admin lalala",
+    "created_at": "2014-01-16T07:51:25.430Z",
+    "updated_at": "2014-01-16T07:51:25.430Z"
+  },
+  {
+    "id": 2,
+    "user_id": 2,
+    "name": "A test admin lalala",
+    "created_at": "2014-01-16T07:56:03.013Z",
+    "updated_at": "2014-01-16T07:56:03.013Z"
+  },
+  {
+    "id": 3,
+    "user_id": 2,
+    "name": "A test admin lalala",
+    "created_at": "2014-01-16T07:57:09.312Z",
+    "updated_at": "2014-01-16T07:57:09.312Z"
+  },
+  {
+    "id": 4,
+    "user_id": 2,
+    "name": "A test admin lalala",
+    "created_at": "2014-01-16T07:58:39.609Z",
+    "updated_at": "2014-01-16T07:58:39.609Z"
+  }
+]
+##Create A Admin
+### Url    
+http://localhost:3000/api/admins
+###Method    
+POST
+###Header
+Content-type: application/json
+### JSON Input
+{
+    "admin": {
+        "name": "A test admin lalala"
+    },
+    "token": "rAoj17gAdDJEudZ8D7yF",
+    "email": "test1@leonsimmonds.com"
+}
+### JSON Return String
+{
+  "id": 4,
+  "user_id": 2,
+  "name": "A test admin lalala",
+  "created_at": "2014-01-16T07:58:39.609Z",
+  "updated_at": "2014-01-16T07:58:39.609Z"
+}
+##Fetch A Admin
+### Url    
+http://localhost:3000/api/admins/2?token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
+###Method    
+GET
+###Header
+Content-type: application/json
+
+### GET Query String
+token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
+
+### JSON Return String
+{
+  "id": 2,
+  "user_id": 2,
+  "name": "A test admin lalala",
+  "created_at": "2014-01-16T07:56:03.013Z",
+  "updated_at": "2014-01-16T07:56:03.013Z"
+}
+##Update A Admin
+### Url    
+http://localhost:3000/api/admins/2
+###Method    
+POST
+###Header
+Content-type: application/json
+### JSON Input
+{
+     "admin": {
         "name": "A New Name"
     },
    "token": "rAoj17gAdDJEudZ8D7yF",
     "email": "test1@leonsimmonds.com"
 }
 ### JSON Return String
+{
+  "id": 2,
+  "user_id": 2,
+  "name": "A New Name",
+  "created_at": "2014-01-16T07:56:03.013Z",
+  "updated_at": "2014-01-16T08:11:33.100Z"
+}
+##Delete A Admin
+### Url    
+http://localhost:3000/api/admins/2
+###Method    
+DELETE
+###Header
+Content-type: application/json
+### JSON Input
+{
+   "token": "rAoj17gAdDJEudZ8D7yF",
+   "email": "test1@leonsimmonds.com"
+}
+### JSON Return String
 No Return String
-
