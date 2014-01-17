@@ -3,16 +3,15 @@ FitQik
 
 FitQik
 
-# Create new user
-## Url
+# Users
+## Create new user
+### Url
 http://localhost:3000/api/users/
-##Method
+###Method
 POST
-##Header
+###Header
 Content-type: application/json
-
-## JSON Input
-
+### JSON Input
 {
     "api_user": {
         "email": "test3@leonsimmonds.com",
@@ -20,11 +19,8 @@ Content-type: application/json
         "password_confirmation": "testing123"
     }
 }
-
-## JSON Return String
-
-### success
-
+### JSON Return String
+#### success
 {
    "id": 1,
    "created_at": "2014-01-13T06:47:16.724Z",
@@ -33,9 +29,7 @@ Content-type: application/json
    "updater_id": null,
    "email": "test3@leonsimmonds.com"
 }
-
-### error
-
+#### error
 {
     "errors": {
         "email": [
@@ -43,43 +37,37 @@ Content-type: application/json
         ]
     }
 }
-
-#Sign In
-
-## Url
+##Sign In
+### Url
 http://localhost:3000/api/users/sign_in
-##Method
+###Method
 POST
-##Header
+###Header
 Content-type: application/json
-
-## JSON Input
+### JSON Input
 {
     "api_user": {
         "email": "test3@leonsimmonds.com",
         "password": "testing123"
     }
 }
-
-## JSON Return String
+### JSON Return String
 {
   "token": "-zkz8VtDTp2Rkt4mg8mL",
   "email": "test3@leonsimmonds.com"
 }
 
-#Fetch All Students (that you are allowed to see)
-
-## Url
+#Students
+##Fetch All Students (that you are allowed to see)
+### Url
 http://localhost:3000/api/students?token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
-##Method
+###Method
 GET
-##Header
+###Header
 Content-type: application/json
-
-## GET query string
+### GET query string
 token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
-
-## JSON Return String
+### JSON Return String
 [
   {
     "id": 1,
@@ -110,16 +98,14 @@ token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
     "updated_at": "2014-01-16T07:58:39.609Z"
   }
 ]
-
-#Create A Student
-## Url    
+##Create A Student
+### Url    
 http://localhost:3000/api/students
-##Method    
+###Method    
 POST
-##Header
+###Header
 Content-type: application/json
-
-## JSON Input
+### JSON Input
 {
     "student": {
         "name": "A test student lalala"
@@ -127,8 +113,7 @@ Content-type: application/json
     "token": "rAoj17gAdDJEudZ8D7yF",
     "email": "test1@leonsimmonds.com"
 }
-
-## JSON Return String
+### JSON Return String
 {
   "id": 4,
   "user_id": 2,
@@ -136,19 +121,18 @@ Content-type: application/json
   "created_at": "2014-01-16T07:58:39.609Z",
   "updated_at": "2014-01-16T07:58:39.609Z"
 }
-
-#Fetch A Student
-## Url    
+##Fetch A Student
+### Url    
 http://localhost:3000/api/students/2?token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
-##Method    
+###Method    
 GET
-##Header
+###Header
 Content-type: application/json
 
-## GET Query String
+### GET Query String
 token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
 
-## JSON Return String
+### JSON Return String
 {
   "id": 2,
   "user_id": 2,
@@ -156,16 +140,14 @@ token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
   "created_at": "2014-01-16T07:56:03.013Z",
   "updated_at": "2014-01-16T07:56:03.013Z"
 }
-
-#Update A Student
-## Url    
+##Update A Student
+### Url    
 http://localhost:3000/api/students/2
-##Method    
+###Method    
 POST
-##Header
+###Header
 Content-type: application/json
-
-## JSON Input
+### JSON Input
 {
      "student": {
         "name": "A New Name"
@@ -173,8 +155,7 @@ Content-type: application/json
    "token": "rAoj17gAdDJEudZ8D7yF",
     "email": "test1@leonsimmonds.com"
 }
-
-## JSON Return String
+### JSON Return String
 {
   "id": 2,
   "user_id": 2,
@@ -182,16 +163,14 @@ Content-type: application/json
   "created_at": "2014-01-16T07:56:03.013Z",
   "updated_at": "2014-01-16T08:11:33.100Z"
 }
-
-#Delete A Student
-## Url    
+##Delete A Student
+### Url    
 http://localhost:3000/api/students/2
-##Method    
+###Method    
 DELETE
-##Header
+###Header
 Content-type: application/json
-
-## JSON Input
+### JSON Input
 {
      "student": {
         "name": "A New Name"
@@ -199,7 +178,6 @@ Content-type: application/json
    "token": "rAoj17gAdDJEudZ8D7yF",
     "email": "test1@leonsimmonds.com"
 }
-
-## JSON Return String
+### JSON Return String
 No Return String
 
