@@ -3,8 +3,12 @@ require 'api_constraints'
 FitQik::Application.routes.draw do
   namespace :api, defaults: {format: 'json'} do
     scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
-      post "appointment/add"
-      post "appointment/update"
+      get '/appointments(.:format)', to: 'appointments#index', as: 'appointments'
+      post '/appointments(.:format)', to: 'appointments#create'
+      get '/appointments/:id(.:format)', to: 'appointments#show', as: 'appointment'
+      post '/appointments/:id(.:format)', to: 'appointments#update'
+      delete '/appointments/:id(.:format)', to: 'appointments#destroy'
+
       #resources :students
       get '/students(.:format)', to: 'students#index', as: 'students'
       post '/students(.:format)', to: 'students#create'
@@ -31,6 +35,12 @@ FitQik::Application.routes.draw do
       get '/disciplines/:id(.:format)', to: 'disciplines#show', as: 'discipline'
       post '/disciplines/:id(.:format)', to: 'disciplines#update'
       delete '/disciplines/:id(.:format)', to: 'disciplines#destroy'
+
+      get '/subjects(.:format)', to: 'subjects#index', as: 'subjects'
+      post '/subjects(.:format)', to: 'subjects#create'
+      get '/subjects/:id(.:format)', to: 'subjects#show', as: 'subject'
+      post '/subjects/:id(.:format)', to: 'subjects#update'
+      delete '/subjects/:id(.:format)', to: 'subjects#destroy'
 
       devise_for :users
     end

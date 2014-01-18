@@ -532,3 +532,284 @@ Content-type: application/json
 }
 ### JSON Return String
 No Return String
+
+#Subjects
+##Fetch All Subjects
+### Url
+http://localhost:3000/api/subjects?token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
+###Method
+GET
+###Header
+Content-type: application/json
+### GET query string
+token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
+### JSON Return String
+[
+  {
+    "id": 1,
+    "discipline_id": 1,
+    "name": "How to Cheat Fate",
+    "description": "The Cards Don't Lie Maaaaaaaaaan",
+    "created_at": "2014-01-18T05:06:27.372Z",
+    "updated_at": "2014-01-18T05:06:27.372Z"
+  },
+  {
+    "id": 2,
+    "discipline_id": 2,
+    "name": "Birkram",
+    "description": "The Hot One",
+    "created_at": "2014-01-18T05:13:32.766Z",
+    "updated_at": "2014-01-18T05:13:32.766Z"
+  },
+  {
+    "id": 3,
+    "discipline_id": 2,
+    "name": "Wang Chung",
+    "description": "Everybody have fun tonight",
+    "created_at": "2014-01-18T05:14:12.588Z",
+    "updated_at": "2014-01-18T05:14:12.588Z"
+  }
+]
+##Create A Subject
+### Url    
+http://localhost:3000/api/subjects
+###Method    
+POST
+###Header
+Content-type: application/json
+### JSON Input
+{
+    "subject": {
+        "discipline": {
+            "id": 1,
+            "name": "Tarot Reading"
+        },
+        "name": "How to Cheat Fate",
+        "description": "The Cards Don't Lie Maaaaaaaaaan"
+    },
+    "token": "28ojjSvUzhQTdrsyM5tA",
+    "email": "test3@leonsimmonds.com"
+}
+### JSON Return String
+{
+  "id": 3,
+  "discipline_id": 1,
+  "name": "How to Cheat Fate",
+  "description": "The Cards Don't Lie Maaaaaaaaaan",
+  "created_at": "2014-01-18T05:06:27.372Z",
+  "updated_at": "2014-01-18T05:06:27.372Z"
+}
+##Fetch A Subject
+### Url    
+http://localhost:3000/api/subjects/4?token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
+###Method    
+GET
+###Header
+Content-type: application/json
+
+### GET Query String
+token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
+
+### JSON Return String
+{
+  "id": 4,
+  "discipline_id": 2,
+  "name": "Birkram",
+  "description": "The Hot One",
+  "created_at": "2014-01-18T05:13:32.766Z",
+  "updated_at": "2014-01-18T05:13:32.766Z"
+}
+##Update A Subject
+### Url    
+http://localhost:3000/api/subjects/2
+###Method    
+POST
+###Header
+Content-type: application/json
+### JSON Input
+{
+    "subject": {
+        "discipline": {
+            "id": 3
+        },
+        "name": "Wang Chung",
+        "description": "Everybody have fun tonight"
+    },
+    "token": "28ojjSvUzhQTdrsyM5tA",
+    "email": "test3@leonsimmonds.com"
+}
+### JSON Return String
+{
+  "id": 4,
+  "discipline_id": 3,
+  "name": "Wang Chung",
+  "description": "Everybody have fun tonight",
+  "created_at": "2014-01-18T05:13:32.766Z",
+  "updated_at": "2014-01-18T05:21:41.417Z"
+}
+##Delete A Subject
+### Url    
+http://localhost:3000/api/subjects/2
+###Method    
+DELETE
+###Header
+Content-type: application/json
+### JSON Input
+{
+   "token": "rAoj17gAdDJEudZ8D7yF",
+   "email": "test1@leonsimmonds.com"
+}
+### JSON Return String
+No Return String
+
+#Appointments
+##Fetch All Appointments
+### Url
+http://localhost:3000/api/appointments?token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
+###Method
+GET
+###Header
+Content-type: application/json
+### GET query string
+token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
+### JSON Return String
+[
+  {
+    "id": 1,
+    "name": null,
+    "when": "2014-01-17T07:22:00.000Z",
+    "created_at": "2014-01-18T06:40:30.250Z",
+    "updated_at": "2014-01-18T06:40:30.250Z",
+    "creator_id": null,
+    "updater_id": null,
+    "subject_id": 4
+  },
+  ...
+  {
+    "id": 6,
+    "name": null,
+    "when": "2014-01-17T07:22:00.000Z",
+    "created_at": "2014-01-18T06:52:56.025Z",
+    "updated_at": "2014-01-18T06:52:56.025Z",
+    "creator_id": null,
+    "updater_id": null,
+    "subject_id": 5
+  }
+]
+##Create A Appointment
+### Url    
+http://localhost:3000/api/appointments
+###Method    
+POST
+###Header
+Content-type: application/json
+### JSON Input
+{
+    "appointment": {
+        "subject": {
+            "id": "5"
+        },
+        "student": [
+            {
+                "id": "3"
+            }
+        ],
+        "teacher": [
+            {
+                "id": "1"
+            }
+        ],
+        "when": "2014-01-17T07:22Z"
+    },
+    "token": "28ojjSvUzhQTdrsyM5tA",
+    "email": "test3@leonsimmonds.com"
+}
+### JSON Return String
+{
+  "id": 6,
+  "name": null,
+  "when": "2014-01-17T07:22:00.000Z",
+  "created_at": "2014-01-18T06:52:56.025Z",
+  "updated_at": "2014-01-18T06:52:56.025Z",
+  "creator_id": null,
+  "updater_id": null,
+  "subject_id": 5
+}
+##Fetch A Appointment
+### Url    
+http://localhost:3000/api/appointments/5?token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
+###Method    
+GET
+###Header
+Content-type: application/json
+
+### GET Query String
+token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
+
+### JSON Return String
+{
+  "id": 5,
+  "name": null,
+  "when": "2014-01-17T07:22:00.000Z",
+  "created_at": "2014-01-18T06:52:30.410Z",
+  "updated_at": "2014-01-18T06:52:30.410Z",
+  "creator_id": null,
+  "updater_id": null,
+  "subject_id": 4
+}
+##Update A Appointment
+### Url    
+http://localhost:3000/api/appointments/2
+###Method    
+POST
+###Header
+Content-type: application/json
+### JSON Input
+{
+    "appointment": {
+        "subject": {
+            "id": "5"
+        },
+        "student": [
+            {
+                "id": "1"
+            },
+            {
+                "id": "3"
+            }
+        ],
+        "teacher": [
+            {
+                "id": "1"
+            }
+        ],
+        "when": "2014-01-17T07:22Z"
+    },
+    "token": "28ojjSvUzhQTdrsyM5tA",
+    "email": "test3@leonsimmonds.com"
+}
+### JSON Return String
+{
+  "id": 5,
+  "name": null,
+  "when": "2014-01-17T07:22:00.000Z",
+  "created_at": "2014-01-18T06:52:30.410Z",
+  "updated_at": "2014-01-18T07:03:12.781Z",
+  "creator_id": null,
+  "updater_id": null,
+  "subject_id": 5
+}
+##Delete A Appointment
+### Url    
+http://localhost:3000/api/appointments/2
+###Method    
+DELETE
+###Header
+Content-type: application/json
+### JSON Input
+{
+   "token": "rAoj17gAdDJEudZ8D7yF",
+   "email": "test1@leonsimmonds.com"
+}
+### JSON Return String
+No Return String
