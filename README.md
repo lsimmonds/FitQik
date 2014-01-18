@@ -696,7 +696,7 @@ token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
     "subject_id": 5
   }
 ]
-##Create A Appointment
+##Create An Appointment
 ### Url    
 http://localhost:3000/api/appointments
 ###Method    
@@ -735,7 +735,7 @@ Content-type: application/json
   "updater_id": null,
   "subject_id": 5
 }
-##Fetch A Appointment
+##Fetch An Appointment
 ### Url    
 http://localhost:3000/api/appointments/5?token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
 ###Method    
@@ -757,7 +757,7 @@ token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
   "updater_id": null,
   "subject_id": 4
 }
-##Update A Appointment
+##Update An Appointment
 ### Url    
 http://localhost:3000/api/appointments/2
 ###Method    
@@ -799,7 +799,7 @@ Content-type: application/json
   "updater_id": null,
   "subject_id": 5
 }
-##Delete A Appointment
+##Delete An Appointment
 ### Url    
 http://localhost:3000/api/appointments/2
 ###Method    
