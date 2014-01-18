@@ -26,6 +26,12 @@ FitQik::Application.routes.draw do
       post '/admins/:id(.:format)', to: 'admins#update'
       delete '/admins/:id(.:format)', to: 'admins#destroy'
 
+      get '/disciplines(.:format)', to: 'disciplines#index', as: 'disciplines'
+      post '/disciplines(.:format)', to: 'disciplines#create'
+      get '/disciplines/:id(.:format)', to: 'disciplines#show', as: 'discipline'
+      post '/disciplines/:id(.:format)', to: 'disciplines#update'
+      delete '/disciplines/:id(.:format)', to: 'disciplines#destroy'
+
       devise_for :users
     end
   end

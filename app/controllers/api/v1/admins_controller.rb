@@ -80,7 +80,16 @@ module Api
       private
         # Use callbacks to share common setup or constraints between actions.
         def set_admin
-          @admin = Admin.find(params[:id])
+          begin
+            @admin = Admin.find(params[:id])
+          rescue ActiveRecord::RecordNotFound
+            logger.error "Attempt to access invalid admin #{params[:id]}"
+            @admin_not_found = true
+            render json: {message: "Illegal admin access request"}, status: :unauthorized
+            return
+          else
+            @admin_not_found = false
+          end
           @current_user = User.find_by email: params[:email]
           render json: {message: "Illegal admin access request"}, status: :unauthorized unless @current_user.id == @admin.user_id
         end

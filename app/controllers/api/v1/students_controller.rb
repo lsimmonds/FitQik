@@ -80,7 +80,16 @@ module Api
       private
         # Use callbacks to share common setup or constraints between actions.
         def set_student
-          @student = Student.find(params[:id])
+          begin
+            @student = Student.find(params[:id])
+          rescue ActiveRecord::RecordNotFound
+            logger.error "Attempt to access invalid student #{params[:id]}"
+            @student_not_found = true
+            render json: {message: "Illegal student access request"}, status: :unauthorized
+            return
+          else
+            @student_not_found = false
+          end
           @current_user = User.find_by email: params[:email]
           render json: {message: "Illegal student access request"}, status: :unauthorized unless @current_user.id == @student.user_id
         end

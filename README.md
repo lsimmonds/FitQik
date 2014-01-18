@@ -418,3 +418,117 @@ Content-type: application/json
 }
 ### JSON Return String
 No Return String
+
+#Disciplines
+##Fetch All Disciplines
+### Url
+http://localhost:3000/api/disciplines?token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
+###Method
+GET
+###Header
+Content-type: application/json
+### GET query string
+token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
+### JSON Return String
+[
+  {
+    "id": 1,
+    "name": "Butterfly Painting",
+    "description": null,
+    "created_at": "2014-01-18T00:09:17.965Z",
+    "updated_at": "2014-01-18T00:09:17.965Z"
+  },
+  {
+    "id": 2,
+    "name": "Yoga",
+    "description": null,
+    "created_at": "2014-01-18T00:09:29.983Z",
+    "updated_at": "2014-01-18T00:09:29.983Z"
+  },
+  {
+    "id": 3,
+    "name": "Weight Training",
+    "description": null,
+    "created_at": "2014-01-18T00:09:48.589Z",
+    "updated_at": "2014-01-18T00:09:48.589Z"
+  }
+]
+##Create A Discipline
+### Url    
+http://localhost:3000/api/disciplines
+###Method    
+POST
+###Header
+Content-type: application/json
+### JSON Input
+{
+    "discipline": {
+        "name": "Yoga"
+    },
+    "token": "rAoj17gAdDJEudZ8D7yF",
+    "email": "test1@leonsimmonds.com"
+}
+### JSON Return String
+{
+  "id": 4,
+  "user_id": 2,
+  "name": "Yoga",
+  "created_at": "2014-01-16T07:58:39.609Z",
+  "updated_at": "2014-01-16T07:58:39.609Z"
+}
+##Fetch A Discipline
+### Url    
+http://localhost:3000/api/disciplines/2?token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
+###Method    
+GET
+###Header
+Content-type: application/json
+
+### GET Query String
+token=rAoj17gAdDJEudZ8D7yF&email=test1@leonsimmonds.com
+
+### JSON Return String
+{
+  "id": 2,
+  "user_id": 2,
+  "name": "A test discipline lalala",
+  "created_at": "2014-01-16T07:56:03.013Z",
+  "updated_at": "2014-01-16T07:56:03.013Z"
+}
+##Update A Discipline
+### Url    
+http://localhost:3000/api/disciplines/2
+###Method    
+POST
+###Header
+Content-type: application/json
+### JSON Input
+{
+     "discipline": {
+        "name": "Tarot Reading"
+    },
+   "token": "rAoj17gAdDJEudZ8D7yF",
+   "email": "test1@leonsimmonds.com"
+}
+### JSON Return String
+{
+  "id": 1,
+  "name": "Tarot Reading",
+  "description": null,
+  "created_at": "2014-01-18T00:09:17.965Z",
+  "updated_at": "2014-01-18T00:14:27.459Z"
+}
+##Delete A Discipline
+### Url    
+http://localhost:3000/api/disciplines/2
+###Method    
+DELETE
+###Header
+Content-type: application/json
+### JSON Input
+{
+   "token": "rAoj17gAdDJEudZ8D7yF",
+   "email": "test1@leonsimmonds.com"
+}
+### JSON Return String
+No Return String
