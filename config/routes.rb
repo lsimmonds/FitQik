@@ -42,7 +42,17 @@ FitQik::Application.routes.draw do
       post '/subjects/:id(.:format)', to: 'subjects#update'
       delete '/subjects/:id(.:format)', to: 'subjects#destroy'
 
+      #devise_for :users, :skip => [:registrations]
       devise_for :users
+      #options '/users(.:format)', to: 'registrations#create'
+      #match '/users(.:format)', :controller => 'registrations', :action => 'create', :constraints => {:method => 'OPTIONS'}
+      #devise_for :users
+      devise_scope :api_user do
+        #match '/users(.:format)', :controller => 'registrations', :action => 'create', :constraints => {:method => 'OPTIONS'}, via: [:options]
+        #match '/users(.:format)', to: 'registrations#create', via: [:options, :post], as: 'user_registration'
+        match '/users(.:format)', to: 'registrations#options', via: [:options]
+      end
+  
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.
