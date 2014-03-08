@@ -1,8 +1,13 @@
 require 'api_constraints'
 
 FitQik::Application.routes.draw do
+  namespace :api do  namespace :v1 do resources :transactions, except: [:new, :edit] end end
   namespace :api, defaults: {format: 'json'} do
     scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
+
+      #get "pay/auth"
+      get "pay/pay"
+
       get '/appointments(.:format)', to: 'appointments#index', as: 'appointments'
       post '/appointments(.:format)', to: 'appointments#create'
       get '/appointments/:id(.:format)', to: 'appointments#show', as: 'appointment'

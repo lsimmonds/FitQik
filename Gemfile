@@ -64,3 +64,6 @@ gem "devise", "~> 3.2.2"
 gem 'userstamp'
 
 gem 'bootstrap-sass', '2.3.2.0'
+
+gem 'paypal-sdk-rest'
+
