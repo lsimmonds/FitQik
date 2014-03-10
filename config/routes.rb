@@ -6,7 +6,9 @@ FitQik::Application.routes.draw do
     scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
 
       #get "pay/auth"
-      get "pay/pay"
+      get "pay/pay_paypal"
+      get "pay/verify_paypal"
+      get "pay/cancel_paypal"
 
       get '/appointments(.:format)', to: 'appointments#index', as: 'appointments'
       post '/appointments(.:format)', to: 'appointments#create'

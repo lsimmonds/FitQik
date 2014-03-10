@@ -2,6 +2,7 @@
 
 FactoryGirl.define do
   factory :account do
-    name "MyText"
+    name "MyString"
+    description "MyString"
   end
 end

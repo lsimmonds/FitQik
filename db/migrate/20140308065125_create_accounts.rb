@@ -1,9 +1,12 @@
 class CreateAccounts < ActiveRecord::Migration
   def change
     create_table :accounts do |t|
-      t.text :name
+      t.string :name
+      t.string :description
 
+      t.userstamps
       t.timestamps
     end
+    add_index :accounts, :name, unique: true
   end
 end

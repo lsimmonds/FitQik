@@ -11,13 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140307072807) do
+ActiveRecord::Schema.define(version: 20140310043649) do
 
   create_table "accounts", force: true do |t|
-    t.text     "name"
+    t.string   "name"
+    t.string   "description"
+    t.integer  "creator_id"
+    t.integer  "updater_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "accounts", ["name"], name: "index_accounts_on_name", unique: true
 
   create_table "admins", force: true do |t|
     t.integer  "user_id"
@@ -25,8 +30,6 @@ ActiveRecord::Schema.define(version: 20140307072807) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "creator_id"
-    t.integer  "updater_id"
   end
 
   create_table "appointments", force: true do |t|
@@ -64,17 +67,32 @@ ActiveRecord::Schema.define(version: 20140307072807) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "creator_id"
-    t.integer  "updater_id"
   end
+
+  create_table "fq_transactions", force: true do |t|
+    t.datetime "occured"
+    t.string   "processor"
+    t.decimal  "amount",      precision: 9, scale: 2
+    t.integer  "account_id"
+    t.boolean  "reconciled"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "external_id"
+    t.string   "description"
+    t.text     "pay_object"
+    t.string   "pay_method"
+    t.string   "callback_id"
+    t.boolean  "validated",                           default: false
+  end
+
+  add_index "fq_transactions", ["account_id"], name: "index_fq_transactions_on_account_id"
+  add_index "fq_transactions", ["callback_id"], name: "index_fq_transactions_on_callback_id"
 
   create_table "students", force: true do |t|
     t.integer  "user_id"
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "creator_id"
-    t.integer  "updater_id"
   end
 
   create_table "subjects", force: true do |t|
@@ -91,21 +109,7 @@ ActiveRecord::Schema.define(version: 20140307072807) do
     t.text     "bio"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "creator_id"
-    t.integer  "updater_id"
   end
-
-  create_table "transactions", force: true do |t|
-    t.datetime "occured"
-    t.text     "processor"
-    t.decimal  "amount",     precision: 9, scale: 2
-    t.integer  "account_id"
-    t.boolean  "reconciled"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "transactions", ["account_id"], name: "index_transactions_on_account_id"
 
   create_table "users", force: true do |t|
     t.datetime "created_at"

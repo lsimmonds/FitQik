@@ -1,5 +1,5 @@
 class Api::V1::PayController < ApplicationController
-  #before_action :set_admin, only: [:show, :edit, :update, :destroy]
+  #before_action :set_pay, only: [:show, :edit, :update, :destroy]
   require 'paypal-sdk-rest'
   include PayPal::SDK::REST
   include PayPal::SDK::Core::Logging
@@ -7,7 +7,7 @@ class Api::V1::PayController < ApplicationController
   def auth
   end
 
-  def pay
+  def pay_paypal
     # #Create Payment Using PayPal Sample
     # This sample code demonstrates how you can process a
     # PayPal Account based Payment.
@@ -51,21 +51,43 @@ class Api::V1::PayController < ApplicationController
     if @payment.create
       # Redirect the user to given approval url
       @redirect_url = @payment.links.find{|v| v.method == "REDIRECT" }.href
-      logger.info "Payment[#{@payment.id}]"
-      logger.info "Payment: "+@payment.methods.inspect
-      logger.info "Payment transactions: "
-      @payment.transactions.each do |transaction|
-        logger.info "transaction: "+transaction.inspect
+      uri = URI.parse(@redirect_url)
+      callback_id = nil
+      uri.query.split('&').each do |q_part|
+        arg=q_part.split '='
+        if arg[0] == "token"
+          callback_id = arg[1]
+        end
       end
-      logger.info "Redirect: #{@redirect_url}"
+
+      @payment.transactions.each do |trans|
+        if trans.success?
+          transaction_info = {:occured => @payment.create_time,
+                              :pay_processor => "paypal",
+                              :pay_method => @payment.payer.payment_method,
+                              :amount => trans.amount.total.to_d,
+                              :external_id => @payment.id,
+                              :callback_id => callback_id,
+                              :description => "A web payment made through PayPal",
+                              :pay_object => @payment.to_json }
+          logger.info "Transaction did not save!: "+trans.inspect unless FqTransaction.add(transaction_info)
+        end
+      end
     else
       logger.error @payment.error.inspect
     end
 
-    #respond_with "{ \"msg\": \"made it\" }"
-    #@snippet = fetch_url @redirect_url
-    #render template: "api/pay/pay.html.erb"
     redirect_to @redirect_url
+  end
+
+  def verify_paypal
+    FqTransaction.verify_by_callback_id(pay_params[:pay_token])
+    render json: {}, status: :ok
+  end
+
+  def cancel_paypal
+    FqTransaction.cancel_by_callback_id(pay_params[:pay_token])
+    render json: {}, status: :ok
   end
 
 private
@@ -77,6 +99,10 @@ private
     else
       nil
     end
+  end
+
+  def pay_params
+    params.permit(:pay_token)
   end
 
 end
