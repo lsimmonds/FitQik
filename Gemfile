@@ -5,8 +5,8 @@ gem 'rails', '4.0.0'
 
 gem "rails-api", "~> 0.1.0"
 
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+# Use mysql2 as the database for Active Record
+gem 'mysql2', :git => "git://github.com/brianmario/mysql2"
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'

@@ -1,12 +1,14 @@
 class CreateStudents < ActiveRecord::Migration
   def change
-    create_table :students do |t|
-      t.references :user
+    if !table_exists?(:students)
+      create_table :students do |t|
+        t.references :user
 
-      t.string :name
+        t.string :name
 
-      t.timestamps
-      t.userstamps
+        t.timestamps
+        t.userstamps
+      end
     end
   end
 end

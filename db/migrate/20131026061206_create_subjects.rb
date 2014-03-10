@@ -1,12 +1,14 @@
 class CreateSubjects < ActiveRecord::Migration
   def change
-    create_table :subjects do |t|
-      t.references :discipline
+    if !table_exists?(:subjects)
+      create_table :subjects do |t|
+        t.references :discipline
 
-      t.string :name
-      t.text :description
+        t.string :name
+        t.text :description
 
-      t.timestamps
+        t.timestamps
+      end
     end
   end
 end

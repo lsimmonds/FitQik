@@ -1,13 +1,15 @@
 class CreateTransactions < ActiveRecord::Migration
   def change
-    create_table :transactions do |t|
-      t.datetime :occured
-      t.text :processor
-      t.decimal :amount, :precision => 9, :scale => 2
-      t.references :account, index: true
-      t.boolean :reconciled
+    if !table_exists?(:transactions)
+      create_table :transactions do |t|
+        t.datetime :occured
+        t.text :processor
+        t.decimal :amount, :precision => 9, :scale => 2
+        t.references :account, index: true
+        t.boolean :reconciled
 
-      t.timestamps
+        t.timestamps
+      end
     end
   end
 end

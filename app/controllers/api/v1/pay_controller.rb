@@ -82,12 +82,12 @@ class Api::V1::PayController < ApplicationController
 
   def verify_paypal
     FqTransaction.verify_by_callback_id(pay_params[:pay_token])
-    render json: {}, status: :ok
+    render json: { :msg => "ok" }, status: :ok
   end
 
   def cancel_paypal
     FqTransaction.cancel_by_callback_id(pay_params[:pay_token])
-    render json: {}, status: :ok
+    render json: { :msg => "ok" }, status: :ok
   end
 
 private

@@ -1,11 +1,13 @@
 class CreateDisciplines < ActiveRecord::Migration
   def change
-    create_table :disciplines do |t|
-      t.string :name
-      t.text :description
+    if !table_exists?(:disciplines)
+      create_table :disciplines do |t|
+        t.string :name
+        t.text :description
 
-      t.timestamps
-      t.userstamps
+        t.timestamps
+        t.userstamps
+      end
     end
   end
 end
