@@ -60,6 +60,8 @@ gem "figaro"
 gem "warden", "~> 1.2.3"
 gem "devise", "~> 3.2.2"
 #gem 'devise', '3.0.0.rc'
+gem 'authority'
+gem 'rolify'
 
 gem 'userstamp'
 

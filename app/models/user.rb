@@ -1,5 +1,7 @@
 require 'token_auth'
 class User < ActiveRecord::Base
+  rolify
+  include Authority::UserAbilities
   include TokenAuth
   model_stamper #Sets this model as a source for user stamping
   stampable #Also lets this model be user stamped
