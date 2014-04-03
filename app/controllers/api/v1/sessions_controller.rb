@@ -21,6 +21,8 @@ module Api
        
       def destroy
         sign_out(resource_name)
+        render json: {
+        }
       end
 
       def sign_in_params
