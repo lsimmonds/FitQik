@@ -17,7 +17,7 @@ module Api
 
       def sign_up_params
 puts "In sign_up_params params: "+params.inspect
-        params.require(:api_user).permit(:email, :password, :password_confirmation)
+        params.require(:api_user).permit(:name, :email, :password, :password_confirmation)
       end
 
     end

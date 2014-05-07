@@ -3,6 +3,7 @@ module Api
     class SubjectsController < ApplicationController
       before_action :set_subject, only: [:show, :edit, :update, :destroy]
       respond_to :json
+      authorize_actions_for Subject
       #acts_as_token_authentication_handler
     
       # GET /subjects

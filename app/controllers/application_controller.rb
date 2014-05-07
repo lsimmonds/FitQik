@@ -59,7 +59,7 @@ puts "cors_preflight_check params: "+params.inspect
   private
   # get the user currently logged in
   def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    @current_user ||= User.find_by_email(params[:email]) if params[:email]
   end
   helper_method :current_user
 

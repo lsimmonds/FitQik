@@ -42,10 +42,11 @@ module Api
       # PATCH/PUT /teachers/1.json
       def update
         teacher_params.each_pair do |property,value|
-          @teacher.send(property+'=',value)if @teacher.respond_to?(property+'=')
+logger.debug "looking at teach["+property.to_s+"]="+value.to_s+" teacher.respond_to?("+property+"'=')"+@teacher.respond_to?(property+'=').to_s
+          @teacher.send(property+'=',value) if @teacher.respond_to?(property+'=')
         end
         if @teacher.save
-          set_teacher
+          #set_teacher
           #respond_with @teacher
           render json: @teacher, status: :ok
         else
@@ -82,7 +83,8 @@ module Api
     
         # Never trust parameters from the scary internet, only allow the white list through.
         def teacher_params
-          params.require(:teacher).permit(:name)
+logger.debug "In teacher_params: params: "+params.inspect
+          params.require(:teacher).permit(:name,:bio)
         end
     end
   end

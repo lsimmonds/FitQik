@@ -1,6 +1,12 @@
 class CreateTeachers < ActiveRecord::Migration
-  def change
-    if !table_exists?(:admins)
+  def down
+    if table_exists?(:teachers)
+      drop_table :teachers
+    end
+  end
+
+  def up
+    if !table_exists?(:teachers)
       create_table :teachers do |t|
         t.references :user
 

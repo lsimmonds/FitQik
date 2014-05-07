@@ -3,6 +3,7 @@ module Api
     class AppointmentsController < ApplicationController
       before_action :set_appointment, only: [:show, :edit, :update, :destroy]
       respond_to :json
+      authorize_actions_for Appointment
     
       # GET /appointments.json
       def index
@@ -20,28 +21,32 @@ module Api
       # POST /appointments.json
       def create
         if appointment?
-          set_appointment
           update
           return
         end
-        unless !appointment_params[:student].empty? && !appointment_params[:teacher].empty? && appointment_params[:when] && appointment_params[:subject]
-          respond_with "Must pass student, teacher, time, and subject", status: :unprocessable_entity
+        unless !appointment_params[:student].nil? && !appointment_params[:student].empty? && !appointment_params[:teacher].nil? && !appointment_params[:teacher].empty? && appointment_params[:when] && appointment_params[:subject]
+          #respond_with "Must pass student, teacher, time, and subject", status: :unprocessable_entity
+          render json: {"message" => "Must pass student, teacher, time, and subject"}, status: :unprocessable_entity
+          return
         else
           base_params = appointment_params.select {|k,v| k != "subject" && k != "student" && k != "teacher"}
+logger.debug "base_params: "+base_params.inspect
+logger.debug "base_params[:when]: "+base_params["when"].inspect
+          base_params[:when] = DateTime.parse(base_params["when"]).strftime("%Y-%m-%d %H:%M:%S")
+logger.debug "base_params[:when]: "+base_params["when"].inspect
           @appointment = Appointment.new(base_params)
+          @appointment.creator=current_user
+          @appointment.updater=current_user
           begin
             @appointment.subject= Subject.find(appointment_params[:subject][:id])
-            appointment_params[:student].each do |student|
-              @appointment.students.push(Student.find(student[:id]))
-            end
-            appointment_params[:teacher].each do |teacher|
-              @appointment.teachers.push(Teacher.find(teacher[:id]))
-            end
+            @appointment.students.push(Student.find(appointment_params[:student][:id]))
+            @appointment.teachers.push(Teacher.find(appointment_params[:teacher][:id]))
           rescue ActiveRecord::RecordNotFound => e
             render json: {"message" => e.to_s}
             return
           end
         end
+logger.debug "appointment: "+@appointment.inspect
     
         if @appointment.save
           render json: @appointment
@@ -109,7 +114,10 @@ module Api
   
       # Never trust parameters from the scary internet, only allow the white list through.
       def appointment_params
-        params.require(:appointment).permit( :id, :when, :subject => [:id],:student => [[:id]],:teacher => [[:id]] )
+puts "In appointment_params "+params.inspect
+logger.debug "In appointment_params "+params.inspect
+#In appointment_params{"token"=>"B4JzNFq_aCN61fyhqxG5", "email"=>"fqtest@leonsimmonds.com", "format"=>"json", "controller"=>"api/v1/appointments", "action"=>"create", "appointment"=>{}}
+        params.require(:appointment).permit( :id, :when, :subject => [[:id]], :student => [[:id]],:teacher => [[:id]] )
       end
     end
   end

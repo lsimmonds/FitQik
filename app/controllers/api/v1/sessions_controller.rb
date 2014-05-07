@@ -13,9 +13,11 @@ module Api
         sign_in(resource_name, resource)
         resource.save!
         @resource = resource
+logger.debug "looking at resource: "+resource.inspect
         render json: {
           token: resource.authentication_token,
-          email: resource.email
+          email: resource.email,
+          name: resource.name
         }
       end
        
