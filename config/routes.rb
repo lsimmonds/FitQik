@@ -54,10 +54,12 @@ FitQik::Application.routes.draw do
       #options '/users(.:format)', to: 'registrations#create'
       #match '/users(.:format)', :controller => 'registrations', :action => 'create', :constraints => {:method => 'OPTIONS'}
       #devise_for :users
+
       devise_scope :api_user do
         #match '/users(.:format)', :controller => 'registrations', :action => 'create', :constraints => {:method => 'OPTIONS'}, via: [:options]
         #match '/users(.:format)', to: 'registrations#create', via: [:options, :post], as: 'user_registration'
         match '/users(.:format)', to: 'registrations#options', via: [:options]
+        match '/users/sign_in(.:format)', to: 'sessions#options', via: [:options]
       end
   
     end

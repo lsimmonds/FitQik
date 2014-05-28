@@ -33,10 +33,12 @@ class ApplicationController < ActionController::Base
 
   def cors_set_access_control_headers
 puts "cors_set_access_control_headers params: "+params.inspect
+    #headers['Access-Control-Allow-Origin'] = 'http://fitqik.com'
     headers['Access-Control-Allow-Origin'] = '*'
     headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
     headers['Access-Control-Request-Method'] = '*'
-    headers['Access-Control-Allow-Headers'] = '*'
+    #headers['Access-Control-Allow-Headers'] = '*'
+    headers['Access-Control-Allow-Headers'] = 'Content-Type, X-Requested-With, *'
     headers['Access-Control-Max-Age'] = "1728000"
   end
 
@@ -48,11 +50,14 @@ puts "cors_set_access_control_headers params: "+params.inspect
 puts "cors_preflight_check params: "+params.inspect
     if request.method == :options
       headers['Access-Control-Allow-Origin'] = '*'
+      #headers['Access-Control-Allow-Origin'] = 'http://fitqik.com'
       headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
       headers['Access-Control-Request-Method'] = '*'
-      headers['Access-Control-Allow-Headers'] = '*'
+      #headers['Access-Control-Allow-Headers'] = '*'
+      headers['Access-Control-Allow-Headers'] = 'Content-Type, X-Requested-With, *'
       headers['Access-Control-Max-Age'] = '1728000'
-      render :text => '', :content_type => 'text/plain'
+      #render :text => '', :content_type => 'text/plain'
+      render :text => '', :content_type => 'application/json'
     end
   end
 

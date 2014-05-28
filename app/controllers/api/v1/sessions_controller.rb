@@ -8,6 +8,11 @@ module Api
        
       respond_to :json
        
+      def options
+        puts "In SessionsController options params: "+params.inspect
+        render json: params
+      end
+
       def create
         self.resource = warden.authenticate!(auth_options)
         sign_in(resource_name, resource)

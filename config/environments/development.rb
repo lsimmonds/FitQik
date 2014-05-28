@@ -30,7 +30,7 @@ FitQik::Application.configure do
   config.assets.debug = true
 
   config.action_dispatch.default_headers = {
-    'X-Frame-Options' => 'ALLOW-FROM http://199.195.192.136',
+    'X-Frame-Options' => 'ALLOW-FROM http://fitqik.com',
     'X-XSS-Protection' => '1; mode=block',
     'X-Content-Type-Options' => 'nosniff'
   }
