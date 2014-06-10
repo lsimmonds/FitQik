@@ -1,7 +1,7 @@
 module Api
   module V1
     class TeachersController < ApplicationController
-      before_action :set_teacher, only: [:show, :edit, :update, :destroy]
+      before_action :set_teacher, only: [:show, :edit, :update, :destroy, :show_appoinments, :get_day_map]
       respond_to :json
     
       # GET /teachers.json
@@ -15,6 +15,27 @@ module Api
       def show
         #render json: @teacher
         respond_with @teacher
+      end
+    
+      def show_appoinments
+        respond_with @teacher.appointments
+      end
+
+      def get_day_map
+	date = params[:date]
+	appts = @teacher.appointments.on_date(date)
+	short_index_appts = {}
+	appts.each do |appointment|
+	  short_index_appts[appointment.when.time.localtime("-08:00").strftime("%H%M")]=appointment
+	end
+logger.debug "In get_day_map: short_index_appts = "+short_index_appts.inspect
+	day_map = {date => {}}
+	("00".."24").each do |hour|
+	  ("00".."59").step(30).each do |min|
+	    day_map["#{date}"]["#{hour}#{min}"] = short_index_appts["#{hour}#{min}"].nil? ? {} : short_index_appts["#{hour}#{min}"]
+	  end
+	end
+	render json: day_map
       end
     
       # GET /teachers/new
@@ -84,7 +105,7 @@ logger.debug "looking at teach["+property.to_s+"]="+value.to_s+" teacher.respond
         # Never trust parameters from the scary internet, only allow the white list through.
         def teacher_params
 logger.debug "In teacher_params: params: "+params.inspect
-          params.require(:teacher).permit(:name,:bio)
+          params.require(:teacher).permit(:name,:bio,:about,:skill,:specialty,:certification,:date)
         end
     end
   end

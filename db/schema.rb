@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140311065229) do
+ActiveRecord::Schema.define(version: 20140601081652) do
 
   create_table "accounts", force: true do |t|
     t.string   "name"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 20140311065229) do
     t.integer  "creator_id"
     t.integer  "updater_id"
     t.integer  "subject_id"
+    t.integer  "length"
   end
 
   add_index "appointments", ["subject_id"], name: "index_appointments_on_subject_id", using: :btree
@@ -74,6 +75,12 @@ ActiveRecord::Schema.define(version: 20140311065229) do
     t.datetime "updated_at"
     t.integer  "creator_id"
     t.integer  "updater_id"
+  end
+
+  create_table "certifications", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "course_instance", force: true do |t|
@@ -180,6 +187,18 @@ ActiveRecord::Schema.define(version: 20140311065229) do
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
+  create_table "skills", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "specialties", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "students", force: true do |t|
     t.integer  "user_id"
     t.string   "name"
@@ -218,7 +237,16 @@ ActiveRecord::Schema.define(version: 20140311065229) do
     t.datetime "updated_at"
     t.integer  "creator_id"
     t.integer  "updater_id"
+    t.integer  "skills_id"
+    t.integer  "specialties_id"
+    t.integer  "certifications_id"
+    t.string   "about"
+    t.string   "text"
   end
+
+  add_index "teachers", ["certifications_id"], name: "index_teachers_on_certifications_id", using: :btree
+  add_index "teachers", ["skills_id"], name: "index_teachers_on_skills_id", using: :btree
+  add_index "teachers", ["specialties_id"], name: "index_teachers_on_specialties_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

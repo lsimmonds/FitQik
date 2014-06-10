@@ -117,7 +117,7 @@ logger.debug "appointment: "+@appointment.inspect
 puts "In appointment_params "+params.inspect
 logger.debug "In appointment_params "+params.inspect
 #In appointment_params{"token"=>"B4JzNFq_aCN61fyhqxG5", "email"=>"fqtest@leonsimmonds.com", "format"=>"json", "controller"=>"api/v1/appointments", "action"=>"create", "appointment"=>{}}
-        params.require(:appointment).permit( :id, :when, :subject => [[:id]], :student => [[:id]],:teacher => [[:id]] )
+        params.require(:appointment).permit( :id, :when, :length, :subject => [[:id]], :student => [[:id]],:teacher => [[:id]] )
       end
     end
   end

@@ -29,6 +29,9 @@ FitQik::Application.routes.draw do
       get '/teachers/:id(.:format)', to: 'teachers#show', as: 'teacher'
       post '/teachers/:id(.:format)', to: 'teachers#update'
       delete '/teachers/:id(.:format)', to: 'teachers#destroy'
+      get '/teachers/:id(.:format)/appointments', to: 'teachers#show_appoinments'
+      post '/teachers/:id(.:format)/appointment', to: 'teachers#add_appoinments'
+      get '/teachers/:id(.:format)/day_map', to: 'teachers#get_day_map'
 
       #resources :admins
       get '/admins(.:format)', to: 'admins#index', as: 'admins'
@@ -49,7 +52,25 @@ FitQik::Application.routes.draw do
       post '/subjects/:id(.:format)', to: 'subjects#update'
       delete '/subjects/:id(.:format)', to: 'subjects#destroy'
 
-      #devise_for :users, :skip => [:registrations]
+      get '/skills(.:format)', to: 'skills#index', as: 'skills'
+      post '/skills(.:format)', to: 'skills#create'
+      get '/skills/:id(.:format)', to: 'skills#show', as: 'skill'
+      post '/skills/:id(.:format)', to: 'skills#update'
+      delete '/skills/:id(.:format)', to: 'skills#destroy'
+
+      get '/specialties(.:format)', to: 'specialties#index', as: 'specialties'
+      post '/specialties(.:format)', to: 'specialties#create'
+      get '/specialties/:id(.:format)', to: 'specialties#show', as: 'specialty'
+      post '/specialties/:id(.:format)', to: 'specialties#update'
+      delete '/specialties/:id(.:format)', to: 'specialties#destroy'
+
+      get '/certifications(.:format)', to: 'certifications#index', as: 'certifications'
+      post '/certifications(.:format)', to: 'certifications#create'
+      get '/certifications/:id(.:format)', to: 'certifications#show', as: 'certification'
+      post '/certifications/:id(.:format)', to: 'certifications#update'
+      delete '/certifications/:id(.:format)', to: 'certifications#destroy'
+
+       #devise_for :users, :skip => [:registrations]
       devise_for :users
       #options '/users(.:format)', to: 'registrations#create'
       #match '/users(.:format)', :controller => 'registrations', :action => 'create', :constraints => {:method => 'OPTIONS'}

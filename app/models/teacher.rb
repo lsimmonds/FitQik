@@ -5,4 +5,7 @@ class Teacher < ActiveRecord::Base
   belongs_to :user
   has_and_belongs_to_many :appointments
   has_many :students, through: :appointments
+  has_many :skills
+  has_many :specialties
+  has_many :certifications
 end

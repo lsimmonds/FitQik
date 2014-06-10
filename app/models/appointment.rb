@@ -4,4 +4,9 @@ class Appointment < ActiveRecord::Base
   has_and_belongs_to_many :students
   has_and_belongs_to_many :teachers
   belongs_to :subject
+
+  def self.on_date(date)
+    where("DATE(CONVERT_TZ(`when`,'+00:00','-08:00')) = ?",date)
+  end
+
 end
