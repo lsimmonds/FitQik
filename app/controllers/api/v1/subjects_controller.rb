@@ -4,6 +4,7 @@ module Api
       before_action :set_subject, only: [:show, :edit, :update, :destroy]
       respond_to :json
       authorize_actions_for Subject
+      authority_actions :update => 'read'
       #acts_as_token_authentication_handler
     
       # GET /subjects

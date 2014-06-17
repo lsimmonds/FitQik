@@ -4,6 +4,8 @@ module Api
       before_action :set_discipline, only: [:show, :edit, :update, :destroy]
       respond_to :json
       authorize_actions_for Discipline
+      #authority_actions :update => 'read'
+
       #acts_as_token_authentication_handler
     
       # GET /disciplines
@@ -36,7 +38,7 @@ module Api
       # POST /disciplines
       # POST /disciplines.json
       def create
-logger.debug "set_discipline curr_user: " + current_user.inspect
+logger.debug "create curr_user: " + current_user.inspect
         @discipline = Discipline.new(discipline_params)
         @discipline.creator_id = current_user
         @discipline.updater_id = current_user
@@ -57,6 +59,7 @@ logger.debug "discipline: "+@discipline.inspect
       # PATCH/PUT /disciplines/1
       # PATCH/PUT /disciplines/1.json
       def update
+logger.debug "update discipline: "+@discipline.inspect
         discipline_params.each_pair do |property,value|
           @discipline.send(property+'=',value)if @discipline.respond_to?(property+'=')
         end

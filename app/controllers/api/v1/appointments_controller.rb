@@ -1,9 +1,10 @@
 module Api
   module V1
     class AppointmentsController < ApplicationController
-      before_action :set_appointment, only: [:show, :edit, :update, :destroy]
+      before_action :set_appointment, only: [:show, :teachers, :edit, :update, :destroy]
       respond_to :json
       authorize_actions_for Appointment
+      authority_actions :update => 'read', :teachers => 'read'
     
       # GET /appointments.json
       def index
@@ -16,6 +17,11 @@ module Api
       def show
         #render json: @appointment
         respond_with @appointment
+      end
+    
+      def teachers
+        #render json: @appointment
+        respond_with @appointment.teachers
       end
     
       # POST /appointments.json
@@ -39,8 +45,10 @@ logger.debug "base_params[:when]: "+base_params["when"].inspect
           @appointment.updater=current_user
           begin
             @appointment.subject= Subject.find(appointment_params[:subject][:id])
-            @appointment.students.push(Student.find(appointment_params[:student][:id]))
-            @appointment.teachers.push(Teacher.find(appointment_params[:teacher][:id]))
+	    student_id = appointment_params[:student][0]?appointment_params[:student][0][:id]:appointment_params[:student]["0"][:id]
+            @appointment.students.push(Student.find(student_id))
+	    teacher_id = appointment_params[:teacher][0]?appointment_params[:teacher][0][:id]:appointment_params[:teacher]["0"][:id]
+            @appointment.teachers.push(Teacher.find(teacher_id))
           rescue ActiveRecord::RecordNotFound => e
             render json: {"message" => e.to_s}
             return

@@ -98,8 +98,9 @@ logger.debug "looking at teach["+property.to_s+"]="+value.to_s+" teacher.respond
           else
             @teacher_not_found = false
           end
-          @current_user = User.find_by email: params[:email]
-          render json: {message: "Illegal teacher access request"}, status: :unauthorized unless @current_user.id == @teacher.user_id
+	  #Let everyone see all teachers for now, may have to refine later
+          #@current_user = User.find_by email: params[:email]
+          #render json: {message: "Illegal teacher access request"}, status: :unauthorized unless @current_user.id == @teacher.user_id
         end
     
         # Never trust parameters from the scary internet, only allow the white list through.

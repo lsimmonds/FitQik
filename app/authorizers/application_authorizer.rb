@@ -13,6 +13,7 @@ class ApplicationAuthorizer < Authority::Authorizer
   # @param [Object] user - whatever represents the current user in your app
   # @return [Boolean]
   def self.default(adjective, user)
+    puts "in default application"
     # 'Whitelist' strategy for security: anything not explicitly allowed is
     # considered forbidden.
     #user.has_role? :admin
@@ -25,12 +26,14 @@ false
   end
 
   def readable_by?(user)
+    puts "in readable_by application"
     resource.user == user || user.has_role?(:admin)
 false
   end
 
   # To update a specific resource instance, you must either own it or be an admin
   def updatable_by?(user)
+    puts "in updatable_by application"
     resource.user == user || user.has_role?(:admin)
 false
   end

@@ -13,7 +13,9 @@ class AppointmentAuthorizer < ApplicationAuthorizer
 #  end
 
   def updatable_by?(user)
-    ( !user.teacher.nil? && resource.teachers.include?(user.teacher) ) || user.has_role?(:admin)
+    puts "in updatable_by appointment"
+    #( !user.teacher.nil? && resource.teachers.include?(user.teacher) ) || user.has_role?(:admin)
+    true
   end
 
   # Instance method: can this user delete this particular appointment?

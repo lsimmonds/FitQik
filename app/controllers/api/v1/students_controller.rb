@@ -15,6 +15,16 @@ module Api
         #render json: @students, status: :ok
         respond_with @students
       end
+
+      def show_my_student
+        @current_user = User.find_by email: params[:email]
+	@student = @current_user.student
+	if @student.nil?
+          respond_with message: "none"
+	else
+          respond_with @student
+	end
+      end
     
       # GET /students/1
       # GET /students/1.json

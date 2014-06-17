@@ -13,11 +13,13 @@ FitQik::Application.routes.draw do
       get '/appointments(.:format)', to: 'appointments#index', as: 'appointments'
       post '/appointments(.:format)', to: 'appointments#create'
       get '/appointments/:id(.:format)', to: 'appointments#show', as: 'appointment'
+      get '/appointments/:id(.:format)/teachers', to: 'appointments#teachers'
       post '/appointments/:id(.:format)', to: 'appointments#update'
       delete '/appointments/:id(.:format)', to: 'appointments#destroy'
 
       #resources :students
       get '/students(.:format)', to: 'students#index', as: 'students'
+      get '/my_student(.:format)', to: 'students#show_my_student'
       post '/students(.:format)', to: 'students#create'
       get '/students/:id(.:format)', to: 'students#show', as: 'student'
       post '/students/:id(.:format)', to: 'students#update'

@@ -13,6 +13,7 @@ class EditorAuthorizer < ApplicationAuthorizer
   end
 
   def updatable_by?(user)
+    puts "in updatable_by editor"
     user.has_role?(:editor) || user.has_role?(:admin)
   end
 
