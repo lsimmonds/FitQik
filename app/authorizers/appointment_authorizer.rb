@@ -1,7 +1,7 @@
 class AppointmentAuthorizer < ApplicationAuthorizer
   # Class method: can this user at least sometimes create a Appointment?
   def self.creatable_by?(user)
-    !user.teacher.nil? || user.has_role?(:admin)
+    !user.teacher.nil? || !user.student.nil? || user.has_role?(:admin)
   end
 
   def self.readable_by?(user)

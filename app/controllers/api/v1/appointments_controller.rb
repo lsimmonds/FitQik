@@ -73,11 +73,14 @@ logger.debug "appointment: "+@appointment.inspect
           @appointment.subject= Subject.find(appointment_params[:subject][:id])
           @appointment.students=[]
           appointment_params[:student].each do |student|
-            @appointment.students.push(Student.find(student[:id]))
+	    student_id = student[1].nil? ? student[:id] : student[1][:id]
+            @appointment.students.push(Student.find(student_id))
           end
           @appointment.teachers=[]
           appointment_params[:teacher].each do |teacher|
-            @appointment.teachers.push(Teacher.find(teacher[:id]))
+logger.debug "teacher: "+teacher.inspect
+	    teacher_id = teacher[1].nil? ? teacher[:id] : teacher[1][:id]
+            @appointment.teachers.push(Teacher.find(teacher_id))
           end
         rescue ActiveRecord::RecordNotFound => e
           render json: {"message" => e.to_s}
