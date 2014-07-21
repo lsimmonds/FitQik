@@ -18,12 +18,25 @@ module Api
         sign_in(resource_name, resource)
         resource.save!
         @resource = resource
+	user = User.find_by_email(resource.email)
+	   #<User id: 11, email: "test5@leonsimmonds.com", encrypted_password: "$2a$10$nzXDrMguDLutCrpExwcJ3uHoxYhookr9gn.NTt7n7eeM...", name: "who dat", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 8, current_sign_in_at: "2014-07-21 07:15:56", last_sign_in_at: "2014-07-21 07:15:56", current_sign_in_ip: "76.90.34.102", last_sign_in_ip: "76.90.34.102", created_at: "2014-05-06 05:44:57", updated_at: "2014-07-21 07:15:56", authentication_token: "A7uM3kr-vMdVHHgFswEn"> 
+	ret_user= {};
+	ret_user["token"] = resource.authentication_token
+	ret_user["email"] = resource.email
+	ret_user["name"] = resource.name
+	if !user.teacher.nil?
+	  ret_user["teacher"] = user.teacher
+	end
+	if !user.student.nil?
+	  ret_user["student"] = user.student
+	end
 logger.debug "looking at resource: "+resource.inspect
-        render json: {
-          token: resource.authentication_token,
-          email: resource.email,
-          name: resource.name
-        }
+        #render json: {
+        #  token: resource.authentication_token,
+        #  email: resource.email,
+        #  name: resource.name
+        #}
+        render json: ret_user
       end
        
       def destroy
