@@ -3,13 +3,13 @@ module Api
     class CertificationsController < ApplicationController
       before_action :set_certification, only: [:show, :edit, :update, :destroy]
       respond_to :json
-      authorize_actions_for Certifications
+      authorize_actions_for Certification
       #acts_as_token_authentication_handler
     
       # GET /certifications
       # GET /certifications.json
       def index
-        @certifications = Certifications.all
+        @certifications = Certification.find(:all,:select => 'id, name')
         #respond_to do |format|
         #  format.json { render json: @certifications, status: :ok }
         #end
@@ -26,7 +26,7 @@ module Api
     
       # GET /certifications/new
       def new
-        @certification = Certifications.new
+        @certification = Certification.new
       end
     
       # GET /certifications/1/edit
@@ -36,7 +36,7 @@ module Api
       # POST /certifications
       # POST /certifications.json
       def create
-        @certification = Certifications.new(certification_params)
+        @certification = Certification.new(certification_params)
 logger.debug "certification: "+@certification.inspect
     
         if @certification.save
@@ -83,7 +83,7 @@ logger.debug "certification: "+@certification.inspect
         def set_certification
 logger.debug "set_certification curr_user: " + current_user.inspect
           begin
-            @certification = Certifications.find(params[:id])
+            @certification = Certification.find(params[:id],:select => 'id, name')
           rescue ActiveRecord::RecordNotFound
             logger.error "Attempt to access invalid certification #{params[:id]}"
             @certification_not_found = true

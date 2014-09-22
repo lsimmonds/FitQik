@@ -3,13 +3,13 @@ module Api
     class SkillsController < ApplicationController
       before_action :set_skill, only: [:show, :edit, :update, :destroy]
       respond_to :json
-      authorize_actions_for Skills
+      authorize_actions_for Skill
       #acts_as_token_authentication_handler
     
       # GET /skills
       # GET /skills.json
       def index
-        @skills = Skills.all
+        @skills = Skill.find(:all,:select => 'id, name')
         #respond_to do |format|
         #  format.json { render json: @skills, status: :ok }
         #end
@@ -26,7 +26,7 @@ module Api
     
       # GET /skills/new
       def new
-        @skill = Skills.new
+        @skill = Skill.new
       end
     
       # GET /skills/1/edit
@@ -36,8 +36,7 @@ module Api
       # POST /skills
       # POST /skills.json
       def create
-        @skill = Skills.new(skill_params)
-logger.debug "skill: "+@skill.inspect
+        @skill = Skill.new(skill_params)
     
         if @skill.save
           #respond_with @skill
@@ -81,9 +80,8 @@ logger.debug "skill: "+@skill.inspect
       private
         # Use callbacks to share common setup or constraints between actions.
         def set_skill
-logger.debug "set_skill curr_user: " + current_user.inspect
           begin
-            @skill = Skills.find(params[:id])
+            @skill = Skill.find(params[:id],:select => 'id, name')
           rescue ActiveRecord::RecordNotFound
             logger.error "Attempt to access invalid skill #{params[:id]}"
             @skill_not_found = true

@@ -1,6 +1,6 @@
-class Specialties < ActiveRecord::Base
+class Skill < ActiveRecord::Base
   include Authority::Abilities
   self.authorizer_name = 'EditorAuthorizer'
 
-  belongs_to :teacher
+  has_and_belongs_to_many :teacher
 end

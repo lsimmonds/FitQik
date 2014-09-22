@@ -27,6 +27,7 @@ FitQik::Application.routes.draw do
 
       #resources :teachers
       get '/teachers(.:format)', to: 'teachers#index', as: 'teachers'
+      get '/my_teacher(.:format)', to: 'teachers#show_my_teacher'
       post '/teachers(.:format)', to: 'teachers#create'
       get '/teachers/:id(.:format)', to: 'teachers#show', as: 'teacher'
       post '/teachers/:id(.:format)', to: 'teachers#update'
@@ -34,6 +35,7 @@ FitQik::Application.routes.draw do
       get '/teachers/:id(.:format)/appointments', to: 'teachers#show_appoinments'
       post '/teachers/:id(.:format)/appointment', to: 'teachers#add_appoinments'
       get '/teachers/:id(.:format)/day_map', to: 'teachers#get_day_map'
+      match '/teachers/:id(.:format)', to: 'teachers#options', via: [:options]
 
       #resources :admins
       get '/admins(.:format)', to: 'admins#index', as: 'admins'

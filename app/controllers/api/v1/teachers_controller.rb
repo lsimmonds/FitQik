@@ -4,6 +4,15 @@ module Api
       before_action :set_teacher, only: [:show, :edit, :update, :destroy, :show_appoinments, :get_day_map]
       respond_to :json
     
+      def options
+        #if access_allowed?
+          cors_set_access_control_headers
+          head :ok
+        #else
+          #head :forbidden
+        #end	
+      end
+
       # GET /teachers.json
       def index
         @teachers = Teacher.all
@@ -11,14 +20,42 @@ module Api
         respond_with @teachers
       end
     
+      def full_teacher
+        teach = @teacher.attributes
+	teach["specialties"] = @teacher.specialties.map{|specialty| {id: specialty.id, name: specialty.name} }
+	teach["certifications"] = @teacher.certifications.map{|cert| {id: cert.id, name: cert.name} }
+	teach["skills"] = @teacher.skills.map{|skill| {id: skill.id, name: skill.name} }
+        return teach
+      end
+
       # GET /teachers/1.json
       def show
         #render json: @teacher
-        respond_with @teacher
+        respond_with full_teacher
       end
     
+      def show_my_teacher
+        @current_user = User.find_by email: params[:email]
+        @teacher = Teacher.includes(:specialties).find(@current_user.teacher)
+        #@teacher = @current_user.teacher.includes(:specialties)
+        if @teacher.nil?
+          respond_with message: "none"
+        else
+          respond_with full_teacher
+        end
+      end
+
       def show_appoinments
-        respond_with @teacher.appointments
+        appts = []
+	appointments = @teacher.appointments.eager_load(:students).where("`when` >= ?",Time.current.utc)
+	#appointments = @teacher.appointments.where("`when` >= ?",Time.current.utc)
+        appointments.each do |appointment|
+          appt = appointment.attributes
+          appt["students"] = appointment.students
+          appts << appt
+        end
+	#respond_with @teacher.appointments.eager_load(:students).where("`when` >= ?",Time.current.utc)
+	respond_with appts
       end
 
       def get_day_map
@@ -62,14 +99,45 @@ logger.debug "In get_day_map: short_index_appts = "+short_index_appts.inspect
     
       # PATCH/PUT /teachers/1.json
       def update
-        teacher_params.each_pair do |property,value|
+	#duh = teacher_params
+        params.each_pair do |property,value|
 logger.debug "looking at teach["+property.to_s+"]="+value.to_s+" teacher.respond_to?("+property+"'=')"+@teacher.respond_to?(property+'=').to_s
-          @teacher.send(property+'=',value) if @teacher.respond_to?(property+'=')
+          case property 
+	  when "specialties"
+	    logger.debug ":specialties: "
+	    unless value.nil?
+	      @teacher.specialties=[]
+	      value.each do |specialty_hash|
+	        specialty = Specialty.find(specialty_hash["id"])
+	        @teacher.specialties<<specialty
+	      end
+	    end
+	  when "certifications"
+	    logger.debug ":certifications: "
+	    unless value.nil?
+	      @teacher.certifications=[]
+	      value.each do |certification_hash|
+	        certification = Certification.exists?(certification_hash["id"])?Certification.find(certification_hash["id"]):nil
+	        @teacher.certifications<<certification unless certification.nil?
+	      end
+	    end
+	  when "skills"
+	    logger.debug ":skills: "
+	    unless value.nil?
+	      @teacher.skills=[]
+	      value.each do |skill_hash|
+	        skill = Skill.find(skill_hash["id"])
+	        @teacher.skills<<skill
+	      end
+	    end
+	  else
+            @teacher.send(property+'=',value) if @teacher.respond_to?(property+'=')
+	  end
         end
         if @teacher.save
           #set_teacher
           #respond_with @teacher
-          render json: @teacher, status: :ok
+          render json: full_teacher, status: :ok
         else
           ##render json: @teacher.errors, status: :unprocessable_entity
           respond_with @teacher.errors, status: :unprocessable_entity
@@ -106,7 +174,7 @@ logger.debug "looking at teach["+property.to_s+"]="+value.to_s+" teacher.respond
         # Never trust parameters from the scary internet, only allow the white list through.
         def teacher_params
 logger.debug "In teacher_params: params: "+params.inspect
-          params.require(:teacher).permit(:name,:bio,:about,:skill,:specialty,:certification,:date)
+          params.require(:teacher).permit(:name,:bio,:about,:text,[:skills],[:specialties],[:certifications],:date)
         end
     end
   end

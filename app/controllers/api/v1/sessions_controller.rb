@@ -25,10 +25,17 @@ module Api
 	ret_user["email"] = resource.email
 	ret_user["name"] = resource.name
 	if !user.teacher.nil?
-	  ret_user["teacher"] = user.teacher
+	  ret_user["teacher"] = user.teacher.attributes
+	  ret_user["teacher"]["specialties"] = user.teacher.specialties
+	  ret_user["teacher"]["certifications"] = user.teacher.certifications
+	  ret_user["teacher"]["skills"] = user.teacher.skills
 	end
 	if !user.student.nil?
 	  ret_user["student"] = user.student
+	end
+logger.debug "Checking admin role user.has_role?(:admin): "+user.has_role?(:admin).inspect
+	if user.has_role?(:admin)
+	  ret_user["is_admin"] = true
 	end
 logger.debug "looking at resource: "+resource.inspect
         #render json: {

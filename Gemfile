@@ -69,3 +69,4 @@ gem 'bootstrap-sass', '2.3.2.0'
 
 gem 'paypal-sdk-rest'
 
+gem 'hashable', '~> 0.1.2'

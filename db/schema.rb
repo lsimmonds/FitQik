@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140601081652) do
+ActiveRecord::Schema.define(version: 20140827045513) do
 
   create_table "accounts", force: true do |t|
     t.string   "name"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20140601081652) do
     t.integer  "updater_id"
     t.integer  "subject_id"
     t.integer  "length"
+    t.string   "status"
   end
 
   add_index "appointments", ["subject_id"], name: "index_appointments_on_subject_id", using: :btree
@@ -229,6 +230,21 @@ ActiveRecord::Schema.define(version: 20140601081652) do
     t.datetime "updated_at"
   end
 
+  create_table "teacher_certifications", force: true do |t|
+    t.integer "teacher_id"
+    t.integer "certification_id"
+  end
+
+  create_table "teacher_skills", force: true do |t|
+    t.integer "teacher_id"
+    t.integer "skill_id"
+  end
+
+  create_table "teacher_specialties", force: true do |t|
+    t.integer "teacher_id"
+    t.integer "specialty_id"
+  end
+
   create_table "teachers", force: true do |t|
     t.integer  "user_id"
     t.string   "name"
@@ -237,16 +253,9 @@ ActiveRecord::Schema.define(version: 20140601081652) do
     t.datetime "updated_at"
     t.integer  "creator_id"
     t.integer  "updater_id"
-    t.integer  "skills_id"
-    t.integer  "specialties_id"
-    t.integer  "certifications_id"
     t.string   "about"
     t.string   "text"
   end
-
-  add_index "teachers", ["certifications_id"], name: "index_teachers_on_certifications_id", using: :btree
-  add_index "teachers", ["skills_id"], name: "index_teachers_on_skills_id", using: :btree
-  add_index "teachers", ["specialties_id"], name: "index_teachers_on_specialties_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
