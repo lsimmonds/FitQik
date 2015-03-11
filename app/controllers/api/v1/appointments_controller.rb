@@ -4,7 +4,7 @@ module Api
       before_action :set_appointment, only: [:show, :teachers, :edit, :update, :destroy]
       respond_to :json
       authorize_actions_for Appointment
-      authority_actions :update => 'read', :teachers => 'read'
+      authority_actions :update => 'update', :teachers => 'read'
     
       # GET /appointments.json
       def index
@@ -65,6 +65,7 @@ logger.debug "appointment: "+@appointment.inspect
     
       # PATCH/PUT /appointments/1.json
       def update
+logger.debug "in update: appointment_params: "+appointment_params.inspect;
         base_params = appointment_params.select {|k,v| k != "subject" && k != "student" && k != "teacher"}
         base_params.each_pair do |property,value|
           @appointment.send(property+'=',value)if @appointment.respond_to?(property+'=')
@@ -125,7 +126,6 @@ logger.debug "teacher: "+teacher.inspect
   
       # Never trust parameters from the scary internet, only allow the white list through.
       def appointment_params
-puts "In appointment_params "+params.inspect
 logger.debug "In appointment_params "+params.inspect
 #In appointment_params{"token"=>"B4JzNFq_aCN61fyhqxG5", "email"=>"fqtest@leonsimmonds.com", "format"=>"json", "controller"=>"api/v1/appointments", "action"=>"create", "appointment"=>{}}
         params.require(:appointment).permit( :id, :when, :length, :status, :subject => [[:id]], :student => [[:id]],:teacher => [[:id]] )
